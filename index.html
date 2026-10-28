@@ -1,0 +1,849 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your First AI Project</title>
+    <meta name="description" content="Discover a beginner-friendly AI project based on your interests and coding experience.">
+
+    <style>
+        :root {
+            --primary: #5b4bdb;
+            --primary-dark: #4032ad;
+            --background: #f7f8fc;
+            --text: #20243a;
+            --muted: #687086;
+            --border: #e5e7f0;
+            --white: #ffffff;
+            --green: #13795b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        button, select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 18px 8%;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            color: var(--primary);
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-label {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .hero {
+            padding: 60px 20px 38px;
+            text-align: center;
+            background:
+                radial-gradient(circle at top right, #e9e5ff 0, transparent 35%),
+                radial-gradient(circle at bottom left, #dff7f0 0, transparent 32%),
+                var(--background);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 30px;
+            background: #eeebff;
+            color: var(--primary-dark);
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            max-width: 760px;
+            margin: 0 auto 16px;
+            font-size: clamp(32px, 5vw, 52px);
+            line-height: 1.12;
+            letter-spacing: -1.8px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            max-width: 620px;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .hero-points {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-top: 24px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 12px 20px 60px;
+        }
+
+        .section-heading {
+            margin: 28px 0 18px;
+            text-align: center;
+        }
+
+        .section-heading h2 {
+            font-size: 27px;
+            margin-bottom: 5px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            align-items: start;
+        }
+
+        .panel {
+            padding: 28px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: var(--white);
+            box-shadow: 0 8px 30px rgba(32, 36, 58, 0.04);
+        }
+
+        .panel h3 {
+            font-size: 19px;
+            margin-bottom: 5px;
+        }
+
+        .panel-intro {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 24px;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .field select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: white;
+            color: var(--text);
+            outline: none;
+        }
+
+        .field select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(91, 75, 219, 0.12);
+        }
+
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            padding: 13px 18px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            color: white;
+            background: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            color: var(--primary-dark);
+            background: #eeebff;
+        }
+
+        .btn-outline {
+            color: var(--text);
+            background: white;
+            border: 1px solid var(--border);
+        }
+
+        .result-panel {
+            min-height: 420px;
+        }
+
+        .empty-state {
+            min-height: 340px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .empty-icon {
+            width: 78px;
+            height: 78px;
+            display: grid;
+            place-items: center;
+            background: #eeebff;
+            border-radius: 24px;
+            font-size: 36px;
+            margin-bottom: 18px;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            max-width: 260px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .project-result[hidden],
+        .empty-state[hidden] {
+            display: none;
+        }
+
+        .project-icon {
+            display: grid;
+            place-items: center;
+            width: 58px;
+            height: 58px;
+            background: #eeebff;
+            border-radius: 17px;
+            font-size: 29px;
+            margin-bottom: 16px;
+        }
+
+        .project-tag {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 30px;
+            background: #e6f6ef;
+            color: var(--green);
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .project-result h3 {
+            font-size: 24px;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .project-description {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .detail {
+            padding: 14px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .detail h4 {
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .detail p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .project-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .project-actions .btn {
+            font-size: 12px;
+            padding: 12px 8px;
+        }
+
+        .workshop {
+            margin-top: 35px;
+            padding: 34px;
+            border-radius: 20px;
+            color: white;
+            background: linear-gradient(120deg, #4032ad, #6c5ce7);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .workshop-content {
+            max-width: 570px;
+        }
+
+        .workshop-label {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            color: #ddd7ff;
+        }
+
+        .workshop h2 {
+            font-size: 27px;
+            line-height: 1.25;
+            margin-bottom: 10px;
+        }
+
+        .workshop p {
+            font-size: 13px;
+            color: #eeeaff;
+        }
+
+        .workshop .btn {
+            width: auto;
+            min-width: 180px;
+            color: var(--primary-dark);
+            background: white;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 38px;
+        }
+
+        .step {
+            padding: 22px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+        }
+
+        .step-number {
+            display: inline-grid;
+            place-items: center;
+            width: 35px;
+            height: 35px;
+            border-radius: 11px;
+            background: #eeebff;
+            color: var(--primary);
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .step h3 {
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .step p {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .footer {
+            padding: 25px 20px;
+            text-align: center;
+            background: white;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .notice {
+            position: fixed;
+            bottom: 22px;
+            left: 50%;
+            transform: translate(-50%, 20px);
+            max-width: calc(100% - 32px);
+            padding: 13px 18px;
+            background: #20243a;
+            color: white;
+            border-radius: 10px;
+            font-size: 13px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.25s;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .notice.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        @media (max-width: 760px) {
+            .navbar {
+                padding: 15px 5%;
+            }
+
+            .nav-label {
+                font-size: 11px;
+                text-align: right;
+            }
+
+            .hero {
+                padding-top: 45px;
+            }
+
+            .builder {
+                grid-template-columns: 1fr;
+            }
+
+            .panel {
+                padding: 22px;
+            }
+
+            .workshop {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 27px;
+            }
+
+            .workshop .btn {
+                width: 100%;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">✦ ProjectFinder</div>
+        <div class="nav-label">Discover. Build. Share.</div>
+    </nav>
+
+    <header class="hero">
+        <span class="badge">YOUR AI PROJECT JOURNEY STARTS HERE</span>
+        <h1>Not sure what to build?<br><span>Find your first AI project.</span></h1>
+        <p>
+            Answer three quick questions and discover a project idea
+            that matches your interests and experience. No AI expertise required.
+        </p>
+        <div class="hero-points">
+            <span>✓ Beginner-friendly ideas</span>
+            <span>✓ Personalized recommendations</span>
+            <span>✓ A clear starting point</span>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="section-heading">
+            <h2>Let's find your project</h2>
+            <p>Tell us a little about yourself to get a recommendation.</p>
+        </div>
+
+        <section class="builder">
+            <div class="panel">
+                <h3>Your interests</h3>
+                <p class="panel-intro">There are no wrong answers. Choose what interests you.</p>
+
+                <form id="projectForm">
+                    <div class="field">
+                        <label for="interest">1. What interests you most?</label>
+                        <select id="interest" required>
+                            <option value="">Choose an interest</option>
+                            <option value="education">Education and learning</option>
+                            <option value="productivity">Productivity and organization</option>
+                            <option value="communication">Chatbots and communication</option>
+                            <option value="documents">Documents and information</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="experience">2. What's your coding experience?</label>
+                        <select id="experience" required>
+                            <option value="">Choose your experience</option>
+                            <option value="beginner">I'm a complete beginner</option>
+                            <option value="basic">I know basic programming</option>
+                            <option value="intermediate">I've built a few projects</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="category">3. What would you like to build?</label>
+                        <select id="category" required>
+                            <option value="">Choose a project type</option>
+                            <option value="web">A web application</option>
+                            <option value="chatbot">A chatbot</option>
+                            <option value="automation">An automation tool</option>
+                            <option value="any">I'm open to anything</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Find My AI Project →</button>
+                </form>
+            </div>
+
+            <div class="panel result-panel">
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">💡</div>
+                    <h3>Your idea is waiting</h3>
+                    <p>Complete the three questions to reveal a project recommendation made for your interests.</p>
+                </div>
+
+                <div class="project-result" id="projectResult" hidden>
+                    <div class="project-icon" id="projectIcon">🤖</div>
+                    <span class="project-tag" id="projectTag">YOUR PROJECT MATCH</span>
+                    <h3 id="projectName"></h3>
+                    <p class="project-description" id="projectDescription"></p>
+
+                    <div class="detail">
+                        <h4>🎯 The problem to solve</h4>
+                        <p id="projectProblem"></p>
+                    </div>
+
+                    <div class="detail">
+                        <h4>🛠️ Suggested starting point</h4>
+                        <p id="projectStart"></p>
+                    </div>
+
+                    <div class="detail">
+                        <h4>🚀 Your next step</h4>
+                        <p id="projectNext"></p>
+                    </div>
+
+                    <div class="project-actions">
+                        <button type="button" class="btn btn-secondary" id="shareButton">↗ Share my idea</button>
+                        <button type="button" class="btn btn-outline" id="restartButton">↻ Try again</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="workshop">
+            <div class="workshop-content">
+                <span class="workshop-label">READY TO TAKE THE NEXT STEP?</span>
+                <h2>Build Your First AI Project in 60 Minutes</h2>
+                <p>Explore practical AI project building through NxtWave's free online workshop.</p>
+            </div>
+            <button class="btn" id="registerButton" type="button">Explore Workshop →</button>
+        </section>
+
+        <section class="steps">
+            <article class="step">
+                <div class="step-number">01</div>
+                <h3>Discover</h3>
+                <p>Explore an idea that connects your interests with a practical problem.</p>
+            </article>
+
+            <article class="step">
+                <div class="step-number">02</div>
+                <h3>Build</h3>
+                <p>Start small, understand the problem, and develop your project step by step.</p>
+            </article>
+
+            <article class="step">
+                <div class="step-number">03</div>
+                <h3>Share</h3>
+                <p>Share your project idea with friends and encourage them to explore AI too.</p>
+            </article>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Discover. Build. Share. | A student project discovery prototype.</p>
+        <p style="margin-top: 5px;">Project suggestions are illustrative and do not guarantee workshop registration or outcomes.</p>
+    </footer>
+
+    <div class="notice" id="notice" role="status" aria-live="polite"></div>
+
+    <script>
+        // Add the official NxtWave registration URL when it is available.
+        const WORKSHOP_REGISTRATION_URL = "";
+
+        const projects = {
+            studyPlanner: {
+                name: "AI Study Planner",
+                icon: "📚",
+                description: "Create a study planner that helps students organize topics, priorities, and study sessions.",
+                problem: "Students can struggle to decide what to study first and how to organize their available time.",
+                start: "Build a simple webpage that accepts subjects, deadlines, and available study hours.",
+                next: "Add a prioritization feature, then explore how AI could help generate study suggestions.",
+                category: "web",
+                interests: ["education", "productivity"],
+                skills: ["beginner", "basic", "intermediate"]
+            },
+            collegeChatbot: {
+                name: "College FAQ Chatbot",
+                icon: "💬",
+                description: "Create a chatbot that answers common questions about college facilities, events, and student services.",
+                problem: "Students repeatedly search for information about college facilities, events, and procedures.",
+                start: "Prepare a small collection of sample questions and answers and create a simple chat interface.",
+                next: "Connect the interface to a verified FAQ knowledge base and explore AI-based responses.",
+                category: "chatbot",
+                interests: ["communication", "education"],
+                skills: ["basic", "intermediate"]
+            },
+            notesSummarizer: {
+                name: "AI Notes Summarizer",
+                icon: "📝",
+                description: "Explore an application that turns lengthy study material into shorter, easier-to-review notes.",
+                problem: "Students may spend a lot of time reviewing long documents before exams.",
+                start: "Create a text input page and build a basic workflow for organizing key points.",
+                next: "Explore a language model or summarization API to produce concise summaries.",
+                category: "automation",
+                interests: ["documents", "education", "productivity"],
+                skills: ["basic", "intermediate"]
+            },
+            documentAssistant: {
+                name: "Personal Document Assistant",
+                icon: "📂",
+                description: "Design a tool that helps users organize documents and quickly find relevant information.",
+                problem: "Important information can be difficult to locate when it is scattered across multiple files.",
+                start: "Build a simple document list with search by title and keywords.",
+                next: "Explore text extraction, embeddings, and semantic search for more advanced retrieval.",
+                category: "web",
+                interests: ["documents", "productivity"],
+                skills: ["basic", "intermediate"]
+            },
+            taskAutomation: {
+                name: "Smart Task Organizer",
+                icon: "⚡",
+                description: "Build a tool that organizes tasks by deadline, priority, and category.",
+                problem: "Managing multiple assignments and deadlines can become difficult without a clear system.",
+                start: "Create a task form and display tasks sorted by due date or priority.",
+                next: "Explore AI-assisted task categorization or suggestions for planning your day.",
+                category: "automation",
+                interests: ["productivity"],
+                skills: ["beginner", "basic", "intermediate"]
+            },
+            beginnerChatbot: {
+                name: "Your First Rule-Based Chatbot",
+                icon: "🤖",
+                description: "Create a simple chatbot that responds to common questions using predefined answers.",
+                problem: "Users often need quick answers to repetitive questions.",
+                start: "Write a small set of questions and responses and match user input to the closest rule.",
+                next: "Expand the conversation flow and later explore AI-powered natural-language responses.",
+                category: "chatbot",
+                interests: ["communication", "education", "documents"],
+                skills: ["beginner", "basic", "intermediate"]
+            }
+        };
+
+        const form = document.getElementById("projectForm");
+        const emptyState = document.getElementById("emptyState");
+        const projectResult = document.getElementById("projectResult");
+        const notice = document.getElementById("notice");
+
+        let currentProject = null;
+        let noticeTimer;
+
+        function showNotice(message) {
+            notice.textContent = message;
+            notice.classList.add("show");
+
+            clearTimeout(noticeTimer);
+
+            noticeTimer = setTimeout(function () {
+                notice.classList.remove("show");
+            }, 3200);
+        }
+
+        function recommendProject(interest, experience, category) {
+            const candidates = Object.values(projects).map(function (project) {
+                let score = 0;
+
+                if (project.interests.includes(interest)) score += 3;
+                if (project.skills.includes(experience)) score += 2;
+
+                if (category === "any" || project.category === category) {
+                    score += 2;
+                }
+
+                if (
+                    project.interests.includes(interest) &&
+                    project.skills.includes(experience) &&
+                    (category === "any" || project.category === category)
+                ) {
+                    score += 2;
+                }
+
+                return { project: project, score: score };
+            });
+
+            candidates.sort(function (a, b) {
+                return b.score - a.score;
+            });
+
+            return candidates[0].project;
+        }
+
+        function displayProject(project, experience) {
+            currentProject = project;
+
+            document.getElementById("projectIcon").textContent = project.icon;
+            document.getElementById("projectName").textContent = project.name;
+            document.getElementById("projectDescription").textContent = project.description;
+            document.getElementById("projectProblem").textContent = project.problem;
+            document.getElementById("projectStart").textContent = project.start;
+            document.getElementById("projectNext").textContent = project.next;
+
+            const skillLabels = {
+                beginner: "Beginner-friendly project",
+                basic: "Suitable for basic coding experience",
+                intermediate: "A practical next-step project"
+            };
+
+            document.getElementById("projectTag").textContent = skillLabels[experience];
+
+            emptyState.hidden = true;
+            projectResult.hidden = false;
+
+            projectResult.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+        }
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const interest = document.getElementById("interest").value;
+            const experience = document.getElementById("experience").value;
+            const category = document.getElementById("category").value;
+
+            if (!interest || !experience || !category) {
+                showNotice("Please answer all three questions first.");
+                return;
+            }
+
+            const project = recommendProject(interest, experience, category);
+            displayProject(project, experience);
+        });
+
+        document.getElementById("restartButton").addEventListener("click", function () {
+            form.reset();
+            currentProject = null;
+            projectResult.hidden = true;
+            emptyState.hidden = false;
+            document.getElementById("interest").focus();
+
+            showNotice("Choose your preferences to find another project.");
+        });
+
+        // Share by copying the project message; do not open the native share interface.
+        document.getElementById("shareButton").addEventListener("click", function () {
+            if (!currentProject) {
+                showNotice("Find a project before sharing.");
+                return;
+            }
+
+            const shareText =
+                "I discovered an AI project idea: " +
+                currentProject.name +
+                ". Find your first AI project with ProjectFinder!";
+
+            const shareUrl = window.location.href;
+            const fullMessage = shareText + "\n" + shareUrl;
+
+            const textArea = document.createElement("textarea");
+            textArea.value = fullMessage;
+            textArea.setAttribute("readonly", "");
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            textArea.style.top = "0";
+
+            document.body.appendChild(textArea);
+            textArea.select();
+
+            let copied = false;
+
+            try {
+                copied = document.execCommand("copy");
+            } catch (error) {
+                copied = false;
+            }
+
+            document.body.removeChild(textArea);
+
+            if (copied) {
+                showNotice("Project idea copied! Share it with your friends.");
+            } else {
+                window.prompt(
+                    "Copy your project idea and share it with friends:",
+                    fullMessage
+                );
+            }
+        });
+
+        document.getElementById("registerButton").addEventListener("click", function () {
+            if (WORKSHOP_REGISTRATION_URL.trim()) {
+                window.open(
+                    WORKSHOP_REGISTRATION_URL,
+                    "_blank",
+                    "noopener,noreferrer"
+                );
+            } else {
+                showNotice("The official workshop registration link has not been added yet.");
+            }
+        });
+    </script>
+</body>
+</html>
